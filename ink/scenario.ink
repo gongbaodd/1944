@@ -1,7 +1,9 @@
 VAR speaker = "writer"
 VAR character_name = "Haotian"
+VAR Achievement_Karl_First_Fight = false
+VAR Achievement_Letter = false
 
-Our story starts at the Sinimäe Hills at the Tannenberg line in 1944..
+Our story starts at the Sinimäe Hills at the Tannenberg line in the end of July 1944..
 
 + [Start Game] -> Scene_1_Battle
 
@@ -14,6 +16,7 @@ Our story starts at the Sinimäe Hills at the Tannenberg line in 1944..
 As the game starts, you are Karl Tammik, a young Estonian soldier in a Waffen-SS uniform. Explosions echo. You step out with your comrades, determined to stop the enemies.
 
 + [Get out of camp] -> Scene_1_Battle_b
++ [Not get out of the camp] -> Scene_1_Battle_bb
 
 === Scene_1_Battle_b ===
 
@@ -23,16 +26,30 @@ As the game starts, you are Karl Tammik, a young Estonian soldier in a Waffen-SS
 ~ speaker = "Narrator"
 Eventually, the bombing stopped, the enemies retreat.
 
+~ Achievement_Karl_First_Fight = true
+
 # IMAGE: images/Sketch-Scene_1_Battle_1.png
 
-+ [Celebrate with your comrades] -> Scene_2_Inspection
++ [Achievement: Short Victory] -> Scene_2_Inspection
+
+=== Scene_1_Battle_bb ===
+
+~ speaker = "Radio"
+"Believe in the Final Victory!" #audio: audio/propagada.mp3
+
+~ speaker = "Narrator"
+You heard the bombing stopped, the enemies retreat.
+
++ [Continue] -> Scene_2_Inspection
 
 === Scene_2_Inspection ===
 
 # IMAGE: images/Scene_2_Inspection.png
 
 ~ speaker = "Narrator"
-You stand on a small hill with other soldiers in a line. Your clothes is cleaned for a German commander (Omavalitsuse Tegelane) to inspects the line.
+You stand on a small hill with other soldiers in a line. Your clothes is cleaned for a German commander to inspects the line.
+
+# IMAGE: images/German_Commander.png
 
 # IMAGE: images/Sketch-Scene_2_Inspection-1.png
 
@@ -44,12 +61,21 @@ Heil Hitler! (He hands you a personally signed photo of Hitler.)
 
 + [Take the photo] -> Scene_2b_Order_to_Retreat
 
++ [Not take the photo] -> Scene_2b_Order_to_Retreat_b
+
 === Scene_2b_Order_to_Retreat ===
 
 # IMAGE: images/Scene_2b_Order_to_Retreat.png
 
 ~ speaker = "Commander"
 For your victory in Tannenberg you are rewarded with going to Germany!
+
++ [Back to camp] -> Scene_2c_Camp_Doodle
+
+=== Scene_2b_Order_to_Retreat_b ===
+
+~ speaker = "Commander"
+It is your loss, it is signed by Hitler himself! Whatever for your victory in Tannenberg you are rewarded with going to Germany!
 
 + [Back to camp] -> Scene_2c_Camp_Doodle
 
@@ -62,38 +88,101 @@ For your victory in Tannenberg you are rewarded with going to Germany!
 # IMAGE: images/Sketch-Scene_2c_Camp_Doodle.png
 
 ~ speaker = "Narrator"
-Later that night, you are drinking at a table in the camp with your comrades. They have conflicting views on the war. You can examine them and read their stories. You also have the photo of Hitler.
+In the camp, you are drinking at a table in the camp with your comrades. 
 
-+ [Draw a doodle on the Hitler photo] -> Scene_3_Truck_Refugees
+
+* [Talk to comrad E] -> Scene_2c_Camp_Doodle_e
+* [Talk to comrad A] -> Scene_2c_Camp_Doodle_a
+* [Talk to comrad B] -> Scene_2c_Camp_Doodle_b
+* [Talk to comrad C] -> Scene_2c_Camp_Doodle_c
+* [Talk to comrad D] -> Scene_2c_Camp_Doodle_d
++ [Next day] -> Scene_3_Truck_Refugees
++ [Learn about the Battle of Tannenberg Line] -> Scene_2_learn
+
+=== Scene_2c_Camp_Doodle_e ===
+~ speaker = "Comrad_e"
+This is Erika, my fiance. Who need this Hitler photo? Having her is enough.
+
++ [Back to others] -> Scene_2c_Camp_Doodle
++ [Draw a doodle on the Hitler photo] -> Scene_2c_Camp_Doodle_ea
+
+=== Scene_2c_Camp_Doodle_ea ===
+
+~ speaker = "Narrator"
+
+You draw a doodle on the Hitler's photo, everyone laughs
+
++ [Back to others] -> Scene_2c_Camp_Doodle
+
+=== Scene_2c_Camp_Doodle_a ===
+
+~ speaker = "Comrad_a"
+This Medal is the only thing from my father, he fought for the WWI, he fought for the white army. After 1940, the ref army excuted him.
+
++ [Back to others] -> Scene_2c_Camp_Doodle
+
+=== Scene_2c_Camp_Doodle_b ===
+~ speaker = "Comrad_b"
+This is not our war, we did not start it. Hitler attacked Russia then it started. He also invade Poland.
+
++ [Back to others] -> Scene_2c_Camp_Doodle
+
+=== Scene_2c_Camp_Doodle_c ===
+~ speaker = "Comrad_c"
+This is all because of Russia. Who invade Finland? And who occupied the Baltic States? They also occupied Poland.
+
++ [Back to others] -> Scene_2c_Camp_Doodle
+
+=== Scene_2c_Camp_Doodle_d ===
+~ speaker = "Comrad_d"
+Do you know what will happen next if we leave? The Red Army will come to our home! They are millions, they will send everyone to Siberia.
+
++ [Back to others] -> Scene_2c_Camp_Doodle
+
+=== Scene_2_learn ===
+Battle of Tannenberg Line (1944 Jul 25 - Aug 10)
+The Battle of Tannenberg Line, fought from 25 July to 10 August 1944, was a significant military engagement between the German Army Detachment Narwa and the Soviet Leningrad Front, centered on the strategically vital Narva Isthmus.
+ The battle ultimately resulted in significant casualties on both sides, with estimates suggesting around 170,000 Soviet casualties and approximately 10,000 German casualties by the end of the engagement. The fighting at the Tannenberg Line exemplified the brutal nature of the Eastern Front during World War II, characterized by relentless assaults and fierce resistance.
+ 
+ + [Back to others] -> Scene_2c_Camp_Doodle
 
 === Scene_3_Truck_Refugees ===
 
 # IMAGE: images/Scene_3_Truck_Refugees.png
 
 ~ speaker = "Narrator"
-You are sitting in the back of a truck, retreating. Your companion next to you is complaining.
+You are sitting in the back of a truck, retreating. A group of local villagers fleeing with their belongings, some with orphans. Suddenly, a fighter plane bombs the ground nearby.
 
-~ speaker = "Companion"
-Why should we leave for Germany? We should just stay here, fight for our country.
++ [Help the villagers] -> Scene_3_Truck_Refugees_a
++ [Not help the villagers] -> Scene_3_Truck_Refugees_b
 
-~ speaker = "Narrator"
-You see a group of local villagers fleeing with their belongings, some with orphans. Suddenly, a fighter plane bombs the ground nearby.
+=== Scene_3_Truck_Refugees_a ===
 
 ~ speaker = "Soldier"
-We should give the truck to the villagers! They need it more.
+We should give the truck to the villagers! They need it more. And we should ambush here protect them.
 
-+ [Give the truck to the fleeing villagers] -> Scene_4_Ambush
++ [Agree] -> Scene_4_Ambush
+
+=== Scene_3_Truck_Refugees_b ===
+
+~ speaker = "Soldier"
+They are attacking civilians. We need to fight back, who knows what will happen when they go further.
+
++ [Agree] -> Scene_4_Ambush
 
 === Scene_4_Ambush ===
 
 # IMAGE: images/Scene_4_Ambush.png
 
 ~ speaker = "Narrator"
-You are walking with your team in the countryside. You see a couple on the road offers you with food. The soldiers talk about ambushing the Red Army. 
-
-You set yourself for the ambush. and see Tanks in the distant horizon. The fight begins.
+You set yourself for the ambush. You hold a letter on your hand, this is the letter for your sister.  And see Tanks in the distant horizon. The fight begins.
 
 # IMAGE: images/Scene_4_Ambush-1.png
+
++ [Start Shooting] -> Scene_4_Ambush_a
++ [Use the telescope] -> Scene_4_Ambush_a
+
+=== Scene_4_Ambush_a ===
 
 ~ speaker = "Red Army Soldier"
 "They are Estonians! Stop!"
@@ -107,13 +196,17 @@ The battle suddenly ends, but you are shot. You see another young Estonian man s
 
 === Scene_5_Switch_Roles ===
 
-# IMAGE: images/Scene_5_Switch_Roles.png
+# IMAGE: images/Juri.png
 
 ~ speaker = "Narrator"
 ~ character_name = "Jüri Jõgi"
-You are now Jüri Jõgi, dressed in a Red Army uniform. You hear shouts about finding Nazi soldiers. 
+You are now Jüri Jõgi, dressed in a Red Army uniform. 
+
+~ speaker = "Soldier"
+There are fascist ambushing!
 
 + [You shot the first guy in your eyesight.] -> Scene_5_Switch_Roles_b 
++ [You head out of your tank] -> Scene_5_Switch_Roles_b
 
 === Scene_5_Switch_Roles_b ===
 
@@ -123,7 +216,8 @@ You are now Jüri Jõgi, dressed in a Red Army uniform. You hear shouts about fi
 ~ speaker = "Narrator"
 You see the young Estonian you shot (Karl) lying on the ground.
 
-+ [Retrieve the letter from Karl's top pocket] -> Scene_5b_The_Letter
++ [Retrieve the letter from Karl] -> Scene_5b_The_Letter
++ [Ignore the letter] ->  Scene_6_Graves_Tallinn
 
 === Scene_5b_The_Letter ===
 
@@ -132,6 +226,8 @@ You see the young Estonian you shot (Karl) lying on the ground.
 ~ speaker = "Jüri"
 The rest of the Waffen SS soldiers ran away. I should send this letter to Karl's sister.
 
+~ Achievement_Letter = true
+
 + [Continue] -> Scene_6_Graves_Tallinn
 
 === Scene_6_Graves_Tallinn ===
@@ -139,19 +235,61 @@ The rest of the Waffen SS soldiers ran away. I should send this letter to Karl's
 # IMAGE: images/Scene_6_Graves_Tallinn.png
 
 ~ speaker = "Narrator"
-You are digging graves for the dead. Kapten Evald Viires is criticizing your team for letting the enemy run.
+You are digging graves for the dead.
 
-Afterwards, while on the road, you see the couple Karl met; the Red Army hides their identity.
+* [Talk to comrad A] -> Scene_6_Graves_Tallinn_a
+* [Talk to comrad B] -> Scene_6_Graves_Tallinn_b 
+* [Talk to comrad C] -> Scene_6_Graves_Tallinn_c 
+* {not Achievement_Letter}[Talk to comrad D] -> Scene_6_Graves_Tallinn_d 
++ [Next scene] -> Scene6_Kapten_Evald_Viires
 
-~ speaker = "Driver"
-(In Russian) Hurry up! We must get to Tallinn!
+=== Scene_6_Graves_Tallinn_a ===
+
+~ speaker = "comrad A"
+My grandma Maria is Estonian. I used to be a hunter in Sibria. where do these people go? If not died, these people will be labeled and send to Gulag.
+
++ [Talk to others] -> Scene_6_Graves_Tallinn
+
+=== Scene_6_Graves_Tallinn_b ===
+
+~ speaker = "comrad B"
+This is my family. We took the photo in Parnu, before the war. I really hope they are safe.
+
++ [Talk to others] -> Scene_6_Graves_Tallinn
+
+=== Scene_6_Graves_Tallinn_c ===
+
+~ speaker = "comrad C"
+I come from Sõrve. I also finght in the rafle unit for the independence war. Some how, after few months, I stood on the red army side. Then the war begin.
+
++ [Talk to others] -> Scene_6_Graves_Tallinn
+
+
+=== Scene_6_Graves_Tallinn_d ===
+
+~ speaker = "comrad D"
+Oh, this guy's name is Karl Tammik, you from your town. May be you can send his letter.
+
+~ Achievement_Letter = true
+
++ [Retrieve the letter] -> Scene_6_Graves_Tallinn
+
+=== Scene6_Kapten_Evald_Viires ===
+
+~ speaker = "Kapten Evald Viires"
+Why are you so slowly? we have to get to Tallinn Fast!
 
 # IMAGE: images/Scene_6_Graves_Tallinn-1.png
 
-~ speaker = "Narrator"
-The couple's faces turn from happiness to fear. It seems that the Red Army is not welcome here.
++ [Continue to Tallinn] -> Scene_6_Tallinn
 
-+ [Continue to Tallinn] -> Scene_7_Aino
+=== Scene_6_Tallinn ===
+
+~ speaker = "Narrator"
+You arrived Tallinn. You can see St. Olaf's Church in the morning Fog.
+
++ {Achievement_Letter}[Find Aino] -> Scene_7_Aino
++ {not Achievement_Letter}[Meet Captain] -> Scene_8_Viires_Threat
 
 === Scene_7_Aino ===
 
@@ -159,6 +297,8 @@ The couple's faces turn from happiness to fear. It seems that the Red Army is no
 
 ~ speaker = "Narrator"
 You are in Tallinn, standing in front of a door with Karl's letter. A woman answers. This is Aino, Karl's sister.
+
+# IMAGE: images/aino.png
 
 ~ speaker = "Aino"
 You were with Karl? What happened?
@@ -173,22 +313,46 @@ I'm a friend of his. He asked me to deliver this.
 # IMAGE: images/Scene_7_Aino-1.png
 
 ~ speaker = "Aino"
-(Aino tells you about Karl and her views on the war. You can click around the room, seeing the ruined Tallinn Theatre outside the window.)
+Aino tells you about Karl and her views on the war. 
 
+* [I met your husband in the front line, pointing Karl's envelope] -> Scene_7_Aino_ba
+* [You walk and see a book shelf] -> Scene_7_Aino_bb
+* [Is the theatre ruined by Germans?] -> Scene_7_Aino_bc
 + [Leave Aino's house] -> Scene_8_Viires_Threat
+
+=== Scene_7_Aino_ba ===
+
+~ speaker = "Aino"
+Karl is my brother, I am not married.
+
++ [go back] -> Scene_7_Aino_b
+
+=== Scene_7_Aino_bb ===
+~ speaker = "Aino"
+This apartment is not mine, My uncle's. Two weeks ago, they fleed to sweden.
+
++ [go back] -> Scene_7_Aino_b
+
+=== Scene_7_Aino_bc ===
+
+~ speaker = "Aino"
+March the 9th. The red army did it. There are only woman, children and old man here. All the men were in the front.
+
++ [go back] -> Scene_7_Aino_b
 
 === Scene_8_Viires_Threat ===
 
 # IMAGE: images/Scene_8_Viires_Threat.png
 
 ~ speaker = "Narrator"
-You have just left Aino's house. You meet your Soviet Commander, Kapten Evald Viires.
+{Achievement_Letter: You have just left Aino's house.} You meet your Soviet Commander, Kapten Evald Viires.
 
 ~ speaker = "Kapten Evald Viires"
-I saw you talking to that woman. Who is she? Are you making connections with Fascists?
+{Achievement_Letter: I saw you talking to that woman. Who is she? Are you making connections with Fascists?}
+{not Achievement_Letter: You used to live here, do you have any conections with Fascists?}
 
-* [Lie about your connection to Aino] -> Viires_Reaction
-* [Tell the truth about Aino] -> Viires_Reaction
+* [I do not know any Fascists] -> Viires_Reaction
+* [I only know my comrads] -> Viires_Reaction
 
 === Viires_Reaction ===
 
@@ -206,11 +370,25 @@ Consider this a warning. You will not associate with fascist sympathizers. Now, 
 ~ speaker = "Narrator"
 You are on Saaremaa island with another soldier, in front of a small wooden house.
 
+* [Talk to soldier 1] -> Scene_9_Saaremaa_Home_a
+* [Talk to soldier 2] -> Scene_9_Saaremaa_Home_b
++ [Keep going] -> Scene_9_Saaremaa_Home_c
+
+=== Scene_9_Saaremaa_Home_a ===
+
 ~ speaker = "Soldier 1"
-This is my home. My family had to flee to Germany.
+This is my home. My family must have fled to Germany.
+
++ [go back] -> Scene_9_Saaremaa_Home
+
+=== Scene_9_Saaremaa_Home_b ===
 
 ~ speaker = "Soldier 2"
-Look at this poor shack. You call this a home?
+Look at this poor shack. My grandma used to told me they lived small, but not this small.
+
++ [go back] -> Scene_9_Saaremaa_Home
+
+=== Scene_9_Saaremaa_Home_c ===
 
 ~ speaker = "Narrator"
 You hear shouting about catching a troop.
@@ -227,15 +405,19 @@ You are near a stream where some children were crossing it carefully. Seeing you
 ~ speaker = "Kapten Evald Viires"
 Shoot them! Now!
 
-~ speaker = "Jüri"
-No! I don't to shoot children!
+
++ [No! I don't to shoot children!] -> Scene_10_The_Stream_refuse
++ [You pull the gun out but can't push the trigger] -> Scene_10_The_Stream_refuse
+
+=== Scene_10_The_Stream_refuse ===
 
 # IMAGE: images/Scene_10_The_Stream-1.png
 
-~ speaker = "Narrator"
-Jüri is shot for refusing the order.
+~ speaker = "Kapten Evald Viires"
+I know you will betray!
 
-+ [Fade to black.] -> Ending_Scene
++ {Achievement_Letter} [Kapten Evald Viires shot Juri. Fade to black.] -> Ending_Scene
++ {not Achievement_Letter} [Kapten Evald Viires shot Juri. Fade to black.] -> Conclusion
 
 === Ending_Scene ===
 
