@@ -1,7 +1,14 @@
 VAR speaker = "writer"
 VAR character_name = "Haotian"
 VAR Achievement_Karl_First_Fight = false
+VAR Achievement_Karl_Story = false
 VAR Achievement_Letter = false
+VAR Achievement_waffen_ss_count = 0 // 5
+VAR Achievement_red_army_count = 0 // 3
+VAR Achievement_Aino_Story_count = 0 // 3
+VAR Achievement_Juri_Story = false
+VAR Achievement_Learn_Tannenberg = false
+VAR Achievement_Learn_white_army = false
 
 Our story starts at the Sinimäe Hills at the Tannenberg line in the end of July 1944..
 
@@ -91,16 +98,17 @@ It is your loss, it is signed by Hitler himself! Whatever for your victory in Ta
 In the camp, you are drinking at a table in the camp with your comrades. 
 
 
-* [Talk to comrad E] -> Scene_2c_Camp_Doodle_e
-* [Talk to comrad A] -> Scene_2c_Camp_Doodle_a
-* [Talk to comrad B] -> Scene_2c_Camp_Doodle_b
+* [Talk to Piir] -> Scene_2c_Camp_Doodle_e
+* [Talk to Kamenski] -> Scene_2c_Camp_Doodle_a
+* [Talk to Sainas] -> Scene_2c_Camp_Doodle_b
 * [Talk to comrad C] -> Scene_2c_Camp_Doodle_c
 * [Talk to comrad D] -> Scene_2c_Camp_Doodle_d
 + [Next day] -> Scene_3_Truck_Refugees
 + [Learn about the Battle of Tannenberg Line] -> Scene_2_learn
 
 === Scene_2c_Camp_Doodle_e ===
-~ speaker = "Comrad_e"
+~ speaker = "Piir"
+~ Achievement_waffen_ss_count += 1
 This is Erika, my fiance. Who need this Hitler photo? Having her is enough.
 
 + [Back to others] -> Scene_2c_Camp_Doodle
@@ -116,30 +124,42 @@ You draw a doodle on the Hitler's photo, everyone laughs
 
 === Scene_2c_Camp_Doodle_a ===
 
-~ speaker = "Comrad_a"
-This Medal is the only thing from my father, he fought for the WWI, he fought for the white army. After 1940, the ref army excuted him.
+~ speaker = "Kamenski"
+~ Achievement_waffen_ss_count += 1
+This Medal is the only thing from my father, it was for the WWI, he fought for the white army. After 1940, the ref army excuted him.
 
 + [Back to others] -> Scene_2c_Camp_Doodle
++ [Learn about the White Army] -> Scene_2c_White_Army
+
+=== Scene_2c_White_Army ===
+~ Achievement_Learn_white_army = true
+The White Army, also known as the White Guard, the White Guardsmen, or simply the Whites, was a common collective name for the armed formations of the White movement and anti-Bolshevik governments during the Russian Civil War. They fought against the Red Army of Soviet Russia.
+
++ [Back] -> Scene_2c_Camp_Doodle
 
 === Scene_2c_Camp_Doodle_b ===
-~ speaker = "Comrad_b"
+~ speaker = "Sainas"
+~ Achievement_waffen_ss_count += 1
 This is not our war, we did not start it. Hitler attacked Russia then it started. He also invade Poland.
 
 + [Back to others] -> Scene_2c_Camp_Doodle
 
 === Scene_2c_Camp_Doodle_c ===
 ~ speaker = "Comrad_c"
+~ Achievement_waffen_ss_count += 1
 This is all because of Russia. Who invade Finland? And who occupied the Baltic States? They also occupied Poland.
 
 + [Back to others] -> Scene_2c_Camp_Doodle
 
 === Scene_2c_Camp_Doodle_d ===
 ~ speaker = "Comrad_d"
+~ Achievement_waffen_ss_count += 1
 Do you know what will happen next if we leave? The Red Army will come to our home! They are millions, they will send everyone to Siberia.
 
 + [Back to others] -> Scene_2c_Camp_Doodle
 
 === Scene_2_learn ===
+~ Achievement_Learn_Tannenberg = true
 Battle of Tannenberg Line (1944 Jul 25 - Aug 10)
 The Battle of Tannenberg Line, fought from 25 July to 10 August 1944, was a significant military engagement between the German Army Detachment Narwa and the Soviet Leningrad Front, centered on the strategically vital Narva Isthmus.
  The battle ultimately resulted in significant casualties on both sides, with estimates suggesting around 170,000 Soviet casualties and approximately 10,000 German casualties by the end of the engagement. The fighting at the Tannenberg Line exemplified the brutal nature of the Eastern Front during World War II, characterized by relentless assaults and fierce resistance.
@@ -192,6 +212,8 @@ You set yourself for the ambush. You hold a letter on your hand, this is the let
 ~ speaker = "Narrator"
 The battle suddenly ends, but you are shot. You see another young Estonian man standing in front of you, astonished.
 
+~ Achievement_Karl_Story = true
+
 + [The screen fades to black.] -> Scene_5_Switch_Roles
 
 === Scene_5_Switch_Roles ===
@@ -237,7 +259,7 @@ The rest of the Waffen SS soldiers ran away. I should send this letter to Karl's
 ~ speaker = "Narrator"
 You are digging graves for the dead.
 
-* [Talk to comrad A] -> Scene_6_Graves_Tallinn_a
+* [Talk to Prohhor] -> Scene_6_Graves_Tallinn_a
 * [Talk to comrad B] -> Scene_6_Graves_Tallinn_b 
 * [Talk to comrad C] -> Scene_6_Graves_Tallinn_c 
 * {not Achievement_Letter}[Talk to comrad D] -> Scene_6_Graves_Tallinn_d 
@@ -245,14 +267,23 @@ You are digging graves for the dead.
 
 === Scene_6_Graves_Tallinn_a ===
 
-~ speaker = "comrad A"
-My grandma Maria is Estonian. I used to be a hunter in Sibria. where do these people go? If not died, these people will be labeled and send to Gulag.
+~ speaker = "Prohhor"
+~ Achievement_red_army_count += 1
+My grandma Maria is Estonian. I used to be a hunter in Sibria. Where do these people go? If not died, these people will be labeled and send to Gulag.
 
 + [Talk to others] -> Scene_6_Graves_Tallinn
++ [Learn about Gulag] -> Scene_6_Gulag
+
+=== Scene_6_Gulag ===
+
+The Gulag was a system of forced labor camps in the Soviet Union. The word Gulag originally referred only to the division of the Soviet secret police that was in charge of running the forced labor camps from the 1930s to the early 1950s during Joseph Stalin's rule, but in English literature the term is popularly used for the system of forced labor throughout the Soviet era.
+
++ [Go back] -> Scene_6_Graves_Tallinn_a
 
 === Scene_6_Graves_Tallinn_b ===
 
 ~ speaker = "comrad B"
+~ Achievement_red_army_count += 1
 This is my family. We took the photo in Parnu, before the war. I really hope they are safe.
 
 + [Talk to others] -> Scene_6_Graves_Tallinn
@@ -260,7 +291,8 @@ This is my family. We took the photo in Parnu, before the war. I really hope the
 === Scene_6_Graves_Tallinn_c ===
 
 ~ speaker = "comrad C"
-I come from Sõrve. I also finght in the rafle unit for the independence war. Some how, after few months, I stood on the red army side. Then the war begin.
+~ Achievement_red_army_count += 1
+I come from Sõrve. I also finght in the rafle unit for the independence war. Somehow, after few months, our unit yield, right now, I stood on the red army side. Then the war begin.
 
 + [Talk to others] -> Scene_6_Graves_Tallinn
 
@@ -323,12 +355,14 @@ Aino tells you about Karl and her views on the war.
 === Scene_7_Aino_ba ===
 
 ~ speaker = "Aino"
+~ Achievement_Aino_Story_count += 1
 Karl is my brother, I am not married.
 
 + [go back] -> Scene_7_Aino_b
 
 === Scene_7_Aino_bb ===
 ~ speaker = "Aino"
+~ Achievement_Aino_Story_count += 1
 This apartment is not mine, My uncle's. Two weeks ago, they fleed to sweden.
 
 + [go back] -> Scene_7_Aino_b
@@ -336,6 +370,8 @@ This apartment is not mine, My uncle's. Two weeks ago, they fleed to sweden.
 === Scene_7_Aino_bc ===
 
 ~ speaker = "Aino"
+~ Achievement_Aino_Story_count += 1
+
 March the 9th. The red army did it. There are only woman, children and old man here. All the men were in the front.
 
 + [go back] -> Scene_7_Aino_b
@@ -371,7 +407,7 @@ Consider this a warning. You will not associate with fascist sympathizers. Now, 
 You are on Saaremaa island with another soldier, in front of a small wooden house.
 
 * [Talk to soldier 1] -> Scene_9_Saaremaa_Home_a
-* [Talk to soldier 2] -> Scene_9_Saaremaa_Home_b
+* [Talk to Prohhor] -> Scene_9_Saaremaa_Home_b
 + [Keep going] -> Scene_9_Saaremaa_Home_c
 
 === Scene_9_Saaremaa_Home_a ===
@@ -383,7 +419,7 @@ This is my home. My family must have fled to Germany.
 
 === Scene_9_Saaremaa_Home_b ===
 
-~ speaker = "Soldier 2"
+~ speaker = "Prohhor"
 Look at this poor shack. My grandma used to told me they lived small, but not this small.
 
 + [go back] -> Scene_9_Saaremaa_Home
@@ -429,7 +465,8 @@ I know you will betray!
 + [Click to read the letter] -> Conclusion
 
 === Conclusion ===
-~ speaker = "writer"
+~ speaker = "Narrator"
+~ Achievement_Juri_Story= true
 The END
 
 -> END

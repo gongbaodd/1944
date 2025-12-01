@@ -188,4 +188,4 @@ graph TD
 
     Ending_Scene[Aino gets Juri's letter] --> BR[Click to read the letter];
     BR --> Conclusion[The END];
-    ```
+```
