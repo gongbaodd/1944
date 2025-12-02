@@ -9,6 +9,7 @@ VAR Achievement_Aino_Story_count = 0 // 3
 VAR Achievement_Juri_Story = false
 VAR Achievement_Learn_Tannenberg = false
 VAR Achievement_Learn_white_army = false
+VAR Achievement_Learn_Estonian_Riflemen = false
 
 Our story starts at the Sinimäe Hills at the Tannenberg line in the end of July 1944..
 
@@ -467,6 +468,16 @@ I know you will betray!
 === Conclusion ===
 ~ speaker = "Narrator"
 ~ Achievement_Juri_Story= true
+These are your achievements
+{Achievement_Karl_First_Fight: First fight}
+{Achievement_Karl_Story: Karl's Story}
+{Achievement_waffen_ss_count == 5: Know all of Karl's comrads}
+{Achievement_Letter: Send the letter}
+{Achievement_red_army_count == 3: Know all of Juri's comrads}
+{Achievement_Aino_Story_count == 3: Aino's story}
+{Achievement_Juri_Story: Juri's story}
+{Achievement_Learn_Tannenberg: Learn Tannenberg}
+{Achievement_Learn_white_army: Learn White Army}
 The END
 
 -> END
