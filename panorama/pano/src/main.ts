@@ -149,13 +149,10 @@ function updateUI(): void {
       button.textContent = choiceText;
       button.addEventListener('click', () => {
         game.makeChoice(index);
+
+        console.log(game.getCurrentKnot());
+
         updatePanorama();
-        
-        // Continue story if there's more text
-        while (game.canContinue() && !game.hasChoices()) {
-          // Story continues automatically
-        }
-        
         updateUI();
       });
       choicesContainer!.appendChild(button);
@@ -168,7 +165,7 @@ function updateUI(): void {
  */
 async function init(): Promise<void> {
   createUIOverlay();
-  
+
   // Load story first
   try {
     await game.loadStory();

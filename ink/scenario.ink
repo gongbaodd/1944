@@ -1,5 +1,5 @@
-VAR speaker = "writer"
-VAR character_name = "Haotian"
+VAR speaker = "Narrator"
+VAR character_name = "Karl Tammik"
 VAR Achievement_Karl_First_Fight = false
 VAR Achievement_Karl_Story = false
 VAR Achievement_Letter = false

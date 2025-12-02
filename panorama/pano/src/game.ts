@@ -12,6 +12,8 @@ export class GameEngine {
   private story: Story | null = null;
   private currentKnot: string | null = null;
   private initialized: boolean = false;
+  private currentText: string = '';
+  private lastPath: string | null = null;
 
   constructor() {
     // Story will be loaded asynchronously
@@ -27,7 +29,7 @@ export class GameEngine {
       const response = await fetch('/scenario.json');
       const scenarioJson = await response.json();
       this.story = new Story(scenarioJson);
-      this.updateCurrentKnot();
+      this.advanceStory();
       this.initialized = true;
     } catch (error) {
       console.error('Failed to load story:', error);
@@ -67,12 +69,7 @@ export class GameEngine {
    * Get the current story text
    */
   getCurrentText(): string {
-    if (!this.story) return '';
-    let text = '';
-    while (this.story.canContinue) {
-      text += this.story.Continue();
-    }
-    return text.trim();
+    return this.currentText;
   }
 
   /**
@@ -90,7 +87,7 @@ export class GameEngine {
     if (!this.story) return;
     if (index >= 0 && index < this.story.currentChoices.length) {
       this.story.ChooseChoiceIndex(index);
-      this.updateCurrentKnot();
+      this.advanceStory();
     }
   }
 
@@ -132,16 +129,52 @@ export class GameEngine {
    */
   private updateCurrentKnot(): void {
     if (!this.story) return;
-    // Try to get the current path which contains the knot name
-    const path = this.story.state.currentPathString;
+
+    let path: string | null = null;
+
+    // 1. Try to get path from the first available choice
+    if (this.story.currentChoices.length > 0) {
+      const choice = this.story.currentChoices[0];
+      if (choice && choice.sourcePath) {
+        path = choice.sourcePath;
+      }
+    }
+
+    // 2. If no choice path, use the last seen path from iteration
+    if (!path) {
+      path = this.lastPath;
+    }
+
+    // 3. Fallback to currentPathString (though likely null when waiting)
+    if (!path) {
+      path = this.story.state.currentPathString;
+    }
+
     if (path) {
       // Extract knot name from path (format: "knotName.stitchName" or just "knotName")
       const parts = path.split('.');
       this.currentKnot = parts[0] || null;
     } else {
-      // Fallback: try to detect from story content or use a default
       this.currentKnot = null;
     }
+  }
+
+  /**
+   * Advance the story and update internal state
+   */
+  private advanceStory(): void {
+    if (!this.story) return;
+
+    this.currentText = '';
+    while (this.story.canContinue) {
+      this.currentText += this.story.Continue();
+      if (this.story.state.currentPathString) {
+        this.lastPath = this.story.state.currentPathString;
+      }
+    }
+    this.currentText = this.currentText.trim();
+
+    this.updateCurrentKnot();
   }
 
   /**
