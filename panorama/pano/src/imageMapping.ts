@@ -5,7 +5,7 @@
 const noimg = "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==";
 
 export const imageMapping: { [knotName: string]: string } = {
-  "0": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710175/Scene_1_Battle_b_etggeo.png",
+  "0": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710176/Scene_1_Battle_avhena.png",
   "Scene_1_Battle": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710176/Scene_1_Battle_avhena.png",
   "Scene_1_Battle_b": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710175/Scene_1_Battle_b_etggeo.png",
   "Scene_1_Battle_bb": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710178/Scene_1_Battle_bb_jhpxjd.png",

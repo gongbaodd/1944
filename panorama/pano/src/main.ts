@@ -29,6 +29,7 @@ let characterInfoElement: HTMLElement | null = null;
 let choicesContainer: HTMLElement | null = null;
 let avatarElement: HTMLImageElement | null = null;
 let achievementOverlay: HTMLElement | null = null;
+let dragInstructionOverlay: HTMLElement | null = null;
 
 /**
  * Initialize Pannellum viewer
@@ -56,14 +57,57 @@ function initPannellum(): void {
   viewer = window.pannellum.viewer(container, {
     type: 'equirectangular',
     autoLoad: true,
-    autoRotate: 0,
+    autoRotate: 0.4,
     showControls: false,
     keyboardZoom: true,
     mouseZoom: true,
     scenes: scenes,
   });
 
+  // Add drag detection to hide instruction overlay
+  setupDragDetection(container);
+
   updatePanorama();
+}
+
+const START_GAME_HOTSPOT_ID = 'startGame';
+
+/**
+ * Setup drag detection to hide instruction overlay
+ */
+function setupDragDetection(container: HTMLElement): void {
+  let mouseDown = false;
+  let startX = 0;
+  let startY = 0;
+
+  container.addEventListener('mousedown', (e) => {
+    mouseDown = true;
+    startX = e.clientX;
+    startY = e.clientY;
+  });
+
+  container.addEventListener('mousemove', (e) => {
+    if (mouseDown && dragInstructionOverlay) {
+      const deltaX = Math.abs(e.clientX - startX);
+      const deltaY = Math.abs(e.clientY - startY);
+      
+      // If mouse moved more than 5 pixels, consider it a drag
+      if (deltaX > 5 || deltaY > 5) {
+        dragInstructionOverlay.style.display = 'none';
+      }
+    }
+  });
+
+  container.addEventListener('mouseup', () => {
+    mouseDown = false;
+  });
+
+  // Also handle touch events for mobile
+  container.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 0 && dragInstructionOverlay) {
+      dragInstructionOverlay.style.display = 'none';
+    }
+  });
 }
 
 /**
@@ -75,9 +119,47 @@ function updatePanorama(): void {
   const currentKnot = game.getCurrentKnot();
 
   if (!currentKnot) return;
-
   // Load the matching scene
   viewer.loadScene(currentKnot);
+
+  // Handle global "start game" hotspot for knot "0"
+  if (currentKnot === '0') {
+    // Ensure any previous instance is removed before adding
+    try {
+      (viewer as any).removeHotSpot?.(START_GAME_HOTSPOT_ID, currentKnot);
+    } catch {
+      // Ignore if it doesn't exist
+    }
+
+    const startGameHotspot = {
+      id: START_GAME_HOTSPOT_ID,
+      pitch: 15,
+      yaw: -100,
+      type: 'info',
+      text: '',
+      cssClass: "start",
+      clickHandlerFunc: () => {
+        // Reveal the DOM overlays when the user explicitly starts the game
+        if (storyOverlay) {
+          storyOverlay.style.display = 'block';
+        }
+        if (achievementOverlay) {
+          achievementOverlay.style.display = 'block';
+        }
+        (viewer as any).removeHotSpot?.(START_GAME_HOTSPOT_ID, '0');
+
+      }
+    };
+
+    (viewer as any).addHotSpot(startGameHotspot, currentKnot);
+  } else {
+    // Remove the hotspot when leaving knot "0"
+    try {
+      (viewer as any).removeHotSpot?.(START_GAME_HOTSPOT_ID, '0');
+    } catch {
+      // Ignore if it doesn't exist
+    }
+  }
 
   // Add / clear custom hotspots for specific scenes
   if (currentKnot === 'Scene_2c_Camp_Doodle') {
@@ -171,6 +253,17 @@ function createUIOverlay(): void {
   panoramaContainer.id = 'pannellum-container';
   app.appendChild(panoramaContainer);
 
+  // Create drag instruction overlay
+  dragInstructionOverlay = document.createElement('div');
+  dragInstructionOverlay.className = 'drag-instruction-overlay';
+  dragInstructionOverlay.innerHTML = `
+    <div class="drag-instruction-text">
+      <h1 class="text-2xl font-bold">Estonia 1944</h1>
+      <p class="text-lg">Drag the background to look around</p>
+    </div>
+  `;
+  app.appendChild(dragInstructionOverlay);
+
   // Create achievement overlay
   achievementOverlay = document.createElement('div');
   achievementOverlay.className = 'achievement-overlay p-4';
@@ -184,6 +277,8 @@ function createUIOverlay(): void {
     </div>
   `;
   app.appendChild(achievementOverlay);
+  // Hide achievement overlay initially; it will be shown when the game starts
+  achievementOverlay.style.display = 'none';
 
   // Create story overlay
   storyOverlay = document.createElement('div');
@@ -203,6 +298,8 @@ function createUIOverlay(): void {
     </div>
   `;
   app.appendChild(storyOverlay);
+  // Hide story overlay initially; it will be shown when the game starts
+  storyOverlay.style.display = 'none';
 
   // Get references to UI elements
   storyTextElement = document.getElementById('story-text');
