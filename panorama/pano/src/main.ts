@@ -74,8 +74,89 @@ function updatePanorama(): void {
 
   const currentKnot = game.getCurrentKnot();
 
+  if (!currentKnot) return;
+
+  // Load the matching scene
   viewer.loadScene(currentKnot);
-  console.log(viewer.getConfig());
+
+  // Add / clear custom hotspots for specific scenes
+  if (currentKnot === 'Scene_2c_Camp_Doodle') {
+    const state = game.getCurrentState();
+    const choices = state.choices || [];
+
+    const hotspotPositions = [
+      { pitch: 5, yaw: -20 },
+      { pitch: 20, yaw: 50 },
+      { pitch: 0, yaw: 60 },
+      { pitch: 5, yaw: -50 },
+      { pitch: 5, yaw: -70 },
+    ];
+
+    // Remove any existing hotspots for this scene so we can recreate them
+    for (let i = 0; i < 5; i++) {
+      const id = `campDoodle-hs-${i + 1}`;
+      try {
+        // Pannellum supports removing hotspots by id and scene ID
+        (viewer as any).removeHotSpot?.(id, currentKnot);
+      } catch {
+        // Ignore if it doesn't exist
+      }
+    }
+
+    // Map specific "Talk to X" choices to fixed hotspot slots 1–5.
+    // Hotspot indices:
+    // 1 → Talk to Piir
+    // 2 → Talk to Kamenski
+    // 3 → Talk to Sainas
+    // 4 → Talk to comrad C
+    // 5 → Talk to comrad D
+    const talkMapping: { [key: string]: number } = {
+      'Talk to Piir': 0,
+      'Talk to Kamenski': 1,
+      'Talk to Sainas': 2,
+      'Talk to comrad C': 3,
+      'Talk to comrad D': 4,
+    };
+
+    choices.forEach((rawText, choiceIndex) => {
+      // Clean brackets like "[Talk to Piir]"
+      const cleaned = rawText.trim().replace(/^\[|\]$/g, '');
+      const hotspotIndex = talkMapping[cleaned];
+
+      // Only create a hotspot if this choice is in our mapping
+      if (hotspotIndex === undefined) return;
+
+      const pos = hotspotPositions[hotspotIndex];
+      if (!pos) return;
+
+      const hotspotConfig = {
+        id: `campDoodle-hs-${hotspotIndex + 1}`,
+        pitch: pos.pitch,
+        yaw: pos.yaw,
+        type: 'info',
+        text: cleaned, // hotspot text = cleaned choice text
+        clickHandlerFunc: () => {
+          // Hotspot triggers its corresponding mapped choice
+          game.makeChoice(choiceIndex);
+          updatePanorama();
+          updateUI();
+        },
+      };
+
+      (viewer as any).addHotSpot(hotspotConfig, currentKnot);
+    });
+  } else {
+    // When leaving Scene_2c_Camp_Doodle, ensure its hotspots are cleared
+    for (let i = 0; i < 5; i++) {
+      const id = `campDoodle-hs-${i + 1}`;
+      try {
+        // Remove from the Camp Doodle scene explicitly
+        (viewer as any).removeHotSpot?.(id, 'Scene_2c_Camp_Doodle');
+      } catch {
+        // Ignore if it doesn't exist
+      }
+    }
+  }
 }
 
 /**
@@ -144,7 +225,7 @@ const achievements: AchievementConfig[] = [
   { name: 'Karl First Fight', variable: 'Achievement_Karl_First_Fight', type: 'boolean' },
   { name: 'Karl Story', variable: 'Achievement_Karl_Story', type: 'boolean' },
   { name: 'Letter', variable: 'Achievement_Letter', type: 'boolean' },
-  { name: 'Waffen SS', variable: 'Achievement_waffen_ss_count', type: 'number', threshold: 5 },
+  { name: 'Talk with Waffen SS Soldiers', variable: 'Achievement_waffen_ss_count', type: 'number', threshold: 5 },
   { name: 'Red Army', variable: 'Achievement_red_army_count', type: 'number', threshold: 3 },
   { name: 'Aino Story', variable: 'Achievement_Aino_Story_count', type: 'number', threshold: 3 },
   { name: 'Juri Story', variable: 'Achievement_Juri_Story', type: 'boolean' },
@@ -237,9 +318,22 @@ function updateUI(): void {
   // Update choices
   if (choicesContainer) {
     choicesContainer.innerHTML = '';
+
+    const currentKnot = game.getCurrentKnot();
+    const hideTalkChoices = currentKnot === 'Scene_2c_Camp_Doodle';
+
     state.choices.forEach((choiceText, index) => {
+      // When in Scene_2c_Camp_Doodle, hide choices whose text starts with "Talk"
+      if (
+        hideTalkChoices &&
+        choiceText.trim().replace(/^\[|\]$/g, '').startsWith('Talk')
+      ) {
+        return;
+      }
+
       const button = document.createElement('button');
-      button.className = 'btn btn-block text-left bg-black text-white border-white hover:bg-gray-900 hover:border-gray-200';
+      button.className =
+        'btn btn-block text-left bg-black text-white border-white hover:bg-gray-900 hover:border-gray-200';
       button.textContent = choiceText;
       button.addEventListener('click', () => {
         game.makeChoice(index);

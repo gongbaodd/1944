@@ -24,9 +24,8 @@ export class GameEngine {
    */
   async loadStory(): Promise<void> {
     if (this.initialized) return;
-
     try {
-      const response = await fetch('/scenario.json');
+      const response = await fetch('./scenario.json');
       const scenarioJson = await response.json();
       this.story = new Story(scenarioJson);
       this.advanceStory();
