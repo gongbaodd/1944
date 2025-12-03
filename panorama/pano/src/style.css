@@ -24,6 +24,14 @@ body {
   left: 0;
 }
 
+.achievement-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
 .story-overlay {
   position: absolute;
   bottom: 0;

@@ -9,7 +9,7 @@ export const imageMapping: { [knotName: string]: string } = {
   "Scene_1_Battle": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710176/Scene_1_Battle_avhena.png",
   "Scene_1_Battle_b": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710175/Scene_1_Battle_b_etggeo.png",
   "Scene_1_Battle_bb": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710178/Scene_1_Battle_bb_jhpxjd.png",
-  "Scene_2_Inspection": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764710177/Scene_2_Inspection_fd2tp0.png",
+  "Scene_2_Inspection": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764721249/Scene_2_Inspection_gs5rly.png",
   "Scene_2b_Order_to_Retreat": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764719506/Retreat_s9gbwb.jpg",
   "Scene_2b_Order_to_Retreat_b": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764719506/Retreat_s9gbwb.jpg",
   "Scene_2c_Camp_Doodle": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764714646/Scene_2c_Camp_Doodle_mlwrnk.png",

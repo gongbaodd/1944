@@ -104,8 +104,8 @@ In the camp, you are drinking at a table in the camp with your comrades.
 * [Talk to Sainas] -> Scene_2c_Camp_Doodle_b
 * [Talk to comrad C] -> Scene_2c_Camp_Doodle_c
 * [Talk to comrad D] -> Scene_2c_Camp_Doodle_d
-+ [Next day] -> Scene_3_Truck_Refugees
 + [Learn about the Battle of Tannenberg Line] -> Scene_2_learn
++ [Next day] -> Scene_3_Truck_Refugees
 
 === Scene_2c_Camp_Doodle_e ===
 ~ speaker = "Piir"
@@ -461,6 +461,7 @@ I know you will betray!
 # IMAGE: images/Ending_Scene.png
 
 ~ speaker = "Narrator"
+~ character_name = ""
 (3rd person view) Aino opens the door at the orphan house. A man gives her a letter. It is the letter from Jüri.
 
 + [Click to read the letter] -> Conclusion
