@@ -38,30 +38,27 @@ function initPannellum(): void {
     return;
   }
 
-  // Get initial panorama URL based on current KNOT
-  const currentKnot = game.getCurrentKnot();
-  const panoramaUrl = getPanoramaUrl(currentKnot);
-
-  // Use a placeholder if no panorama URL is found
-  const defaultPanorama = panoramaUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgaGVpZ2h0PSI1MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMWExYTFhO3N0b3Atb3BhY2l0eToxIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojMDAwO3N0b3Atb3BhY2l0eToxIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMDAiIGhlaWdodD0iNTAwIiBmaWxsPSJ1cmwoI2dyYWQpIi8+PHRleHQgeD0iNTAwIiB5PSIyNTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+Tm8gUGFub3JhbWEgSW1hZ2U8L3RleHQ+PC9zdmc+';
+  // Create scenes object from imageMapping
+  const scenes: { [key: string]: any } = {};
+  Object.entries(imageMapping).forEach(([knot, url]) => {
+    scenes[knot] = {
+      type: 'equirectangular',
+      panorama: url,
+      autoLoad: true,
+    };
+  });
 
   viewer = window.pannellum.viewer(container, {
     type: 'equirectangular',
-    panorama: defaultPanorama,
     autoLoad: true,
     autoRotate: 0,
-    showControls: true,
+    showControls: false,
     keyboardZoom: true,
     mouseZoom: true,
+    scenes: scenes,
   });
-}
 
-/**
- * Get panorama URL for a given KNOT name
- */
-function getPanoramaUrl(knotName: string | null): string | null {
-  if (!knotName) return null;
-  return imageMapping[knotName] || null;
+  updatePanorama();
 }
 
 /**
@@ -71,18 +68,9 @@ function updatePanorama(): void {
   if (!viewer) return;
 
   const currentKnot = game.getCurrentKnot();
-  const panoramaUrl = getPanoramaUrl(currentKnot);
 
-  if (panoramaUrl) {
-    try {
-      viewer.loadScene('current', {
-        type: 'equirectangular',
-        panorama: panoramaUrl,
-      });
-    } catch (error) {
-      console.error('Failed to load panorama:', error);
-    }
-  }
+  viewer.loadScene(currentKnot);
+  console.log(viewer.getConfig());
 }
 
 /**
