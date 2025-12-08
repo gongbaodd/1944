@@ -1,2 +1,4 @@
 *.png
 *.mp3
+*.pdf
+generated-flowchart.svg

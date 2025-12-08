@@ -13,7 +13,7 @@ const ctx = (() => {
   return context;
 })();
 
-const bgImageUrl = 'https://res.cloudinary.com/dmq8ipket/image/upload/v1765199493/bg_iofceq.png';
+const bgImageUrl = 'https://res.cloudinary.com/dmq8ipket/image/upload/v1765208339/bg_tcrssc.png';
 const bgImage = new Image();
 
 const pointerState = {
