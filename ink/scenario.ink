@@ -114,7 +114,7 @@ In the camp, you are drinking at a table in the camp with your waffen SS soldier
 * [Talk to Sainas] -> Scene_2c_Camp_Doodle_b
 * [Talk to comrad C] -> Scene_2c_Camp_Doodle_c
 * [Talk to comrad D] -> Scene_2c_Camp_Doodle_d
-+ [Learn about the Battle of Tannenberg Line] -> Scene_2_learn
++ {not Achievement_Learn_Tannenberg}[Learn about the Battle of Tannenberg Line] -> Scene_2_learn
 + {Achievement_waffen_ss_count < 5}[Next day] -> Scene_3_Truck_Refugees
 + {Achievement_waffen_ss_count > 4}[Next day] -> Scene_2c_Camp_Doodle_awards
 

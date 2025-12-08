@@ -30,6 +30,7 @@ let choicesContainer: HTMLElement | null = null;
 let avatarElement: HTMLImageElement | null = null;
 let achievementOverlay: HTMLElement | null = null;
 let dragInstructionOverlay: HTMLElement | null = null;
+let canvasOverlay: HTMLIFrameElement | null = null;
 
 /**
  * Initialize Pannellum viewer
@@ -239,6 +240,9 @@ function updatePanorama(): void {
       }
     }
   }
+
+  // Toggle the drawing iframe overlay for the special knot
+  setCanvasOverlayVisibility(currentKnot === 'Scene_2c_Camp_Doodle_ea');
 }
 
 /**
@@ -306,6 +310,30 @@ function createUIOverlay(): void {
   characterInfoElement = document.getElementById('character-info');
   choicesContainer = document.getElementById('choices-container');
   avatarElement = document.getElementById('avatar') as HTMLImageElement;
+
+  // Create hidden canvas iframe overlay (shown only for specific knot)
+  canvasOverlay = document.createElement('iframe');
+  canvasOverlay.id = 'canvas-overlay';
+  canvasOverlay.src = './canvas.html';
+  canvasOverlay.style.position = 'fixed';
+  canvasOverlay.style.top = '50%';
+  canvasOverlay.style.left = '50%';
+  canvasOverlay.style.transform = 'translate(-50%, -50%)';
+  canvasOverlay.style.width = '80vw';
+  canvasOverlay.style.height = '80vh';
+  canvasOverlay.style.border = '0';
+  canvasOverlay.style.zIndex = '2000';
+  canvasOverlay.style.boxShadow = '0 10px 40px rgba(0,0,0,0.6)';
+  canvasOverlay.style.display = 'none';
+  app.appendChild(canvasOverlay);
+}
+
+/**
+ * Show or hide the canvas overlay iframe
+ */
+function setCanvasOverlayVisibility(show: boolean): void {
+  if (!canvasOverlay) return;
+  canvasOverlay.style.display = show ? 'block' : 'none';
 }
 
 /**
