@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #efefef;
+            color: #e5e7eb;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+        #canvas {
+            touch-action: none; /* allow drawing on touch devices */
+            cursor: crosshair;
+        }
+        .hint {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script type="module" src="./src/canvas.ts"></script>
+</body>
+</html>
