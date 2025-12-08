@@ -10,6 +10,7 @@ VAR Achievement_Juri_Story = false
 VAR Achievement_Learn_Tannenberg = false
 VAR Achievement_Learn_white_army = false
 VAR Achievement_Learn_Estonian_Riflemen = false
+VAR Has_Photo = false
 
 Our story starts at the Sinimäe Hills at the Tannenberg line in the end of July 1944..
 
@@ -34,11 +35,18 @@ As the game starts, you are Karl Tammik, a young Estonian soldier in a Waffen-SS
 ~ speaker = "Narrator"
 Eventually, the bombing stopped, the enemies retreat.
 
-~ Achievement_Karl_First_Fight = true
-
 # IMAGE: images/Sketch-Scene_1_Battle_1.png
 
-+ [Achievement: Short Victory] -> Scene_2_Inspection
++ [Continue] -> Scene_1_Battle_bAward
+
+=== Scene_1_Battle_bAward ===
+~ speaker = "Narrator"
+
+Achievement: Karl First Fight, You can see your achievements on the top panel
+
+~ Achievement_Karl_First_Fight = true
+
++ [Continue] -> Scene_2_Inspection
 
 === Scene_1_Battle_bb ===
 
@@ -75,6 +83,8 @@ Heil Hitler! (He hands you a personally signed photo of Hitler.)
 
 # IMAGE: images/Scene_2b_Order_to_Retreat.png
 
+~ Has_Photo = true
+
 ~ speaker = "Commander"
 For your victory in Tannenberg you are rewarded with going to Germany!
 
@@ -96,7 +106,7 @@ It is your loss, it is signed by Hitler himself! Whatever for your victory in Ta
 # IMAGE: images/Sketch-Scene_2c_Camp_Doodle.png
 
 ~ speaker = "Narrator"
-In the camp, you are drinking at a table in the camp with your comrades. 
+In the camp, you are drinking at a table in the camp with your waffen SS soldiers. Drag the background can click the information tag to chat.
 
 
 * [Talk to Piir] -> Scene_2c_Camp_Doodle_e
@@ -105,15 +115,22 @@ In the camp, you are drinking at a table in the camp with your comrades.
 * [Talk to comrad C] -> Scene_2c_Camp_Doodle_c
 * [Talk to comrad D] -> Scene_2c_Camp_Doodle_d
 + [Learn about the Battle of Tannenberg Line] -> Scene_2_learn
-+ [Next day] -> Scene_3_Truck_Refugees
++ {Achievement_waffen_ss_count < 5}[Next day] -> Scene_3_Truck_Refugees
++ {Achievement_waffen_ss_count > 4}[Next day] -> Scene_2c_Camp_Doodle_awards
+
+=== Scene_2c_Camp_Doodle_awards ===
+
+Achievement: talk to Waffen SS soldiers
+
++ [Next Day] -> Scene_3_Truck_Refugees
 
 === Scene_2c_Camp_Doodle_e ===
 ~ speaker = "Piir"
 ~ Achievement_waffen_ss_count += 1
-This is Erika, my fiance. Who need this Hitler photo? Having her is enough.
+This photo is Erika, my fiance. We met in Tartu. {Has_Photo: Who need Hitler's photo? Having her is enough.}
 
 + [Back to others] -> Scene_2c_Camp_Doodle
-+ [Draw a doodle on the Hitler photo] -> Scene_2c_Camp_Doodle_ea
++ {Has_Photo}[Draw a doodle on the Hitler photo] -> Scene_2c_Camp_Doodle_ea
 
 === Scene_2c_Camp_Doodle_ea ===
 
@@ -165,7 +182,22 @@ Battle of Tannenberg Line (1944 Jul 25 - Aug 10)
 The Battle of Tannenberg Line, fought from 25 July to 10 August 1944, was a significant military engagement between the German Army Detachment Narwa and the Soviet Leningrad Front, centered on the strategically vital Narva Isthmus.
  The battle ultimately resulted in significant casualties on both sides, with estimates suggesting around 170,000 Soviet casualties and approximately 10,000 German casualties by the end of the engagement. The fighting at the Tannenberg Line exemplified the brutal nature of the Eastern Front during World War II, characterized by relentless assaults and fierce resistance.
  
- + [Back to others] -> Scene_2c_Camp_Doodle
+ + [Do a quiz] -> Scene_2_learn_quiz
+ 
+=== Scene_2_learn_quiz ===
+
+Where did the Battle of Tannenberg happened?
+
+* [Jõhvi] -> Scene_2_learn_quiz
+* [Sinimäe Hills] -> Scene_2_learn_award
+* [Lake Ülemiste] -> Scene_2_learn_quiz
+* [Saaremaa] -> Scene_2_learn_quiz
+
+=== Scene_2_learn_award ===
+
+Achievement: Learn Tannenberg battle
+
++ [Back to others] -> Scene_2c_Camp_Doodle
 
 === Scene_3_Truck_Refugees ===
 
