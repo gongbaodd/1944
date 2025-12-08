@@ -4,6 +4,7 @@ VAR Achievement_Karl_First_Fight = false
 VAR Achievement_Karl_Story = false
 VAR Achievement_Letter = false
 VAR Achievement_waffen_ss_count = 0 // 5
+VAR Achievement_waffen_ss = false
 VAR Achievement_red_army_count = 0 // 3
 VAR Achievement_Aino_Story_count = 0 // 3
 VAR Achievement_Juri_Story = false
@@ -115,10 +116,12 @@ In the camp, you are drinking at a table in the camp with your waffen SS soldier
 * [Talk to comrad C] -> Scene_2c_Camp_Doodle_c
 * [Talk to comrad D] -> Scene_2c_Camp_Doodle_d
 + {not Achievement_Learn_Tannenberg}[Learn about the Battle of Tannenberg Line] -> Scene_2_learn
-+ {Achievement_waffen_ss_count < 5}[Next day] -> Scene_3_Truck_Refugees
++ {Achievement_waffen_ss_count < 5}[It's too late. I will go sleep now] -> Scene_3_Truck_Refugees
 + {Achievement_waffen_ss_count > 4}[Next day] -> Scene_2c_Camp_Doodle_awards
 
 === Scene_2c_Camp_Doodle_awards ===
+
+~ Achievement_waffen_ss = true
 
 Achievement: talk to Waffen SS soldiers
 
@@ -129,8 +132,8 @@ Achievement: talk to Waffen SS soldiers
 ~ Achievement_waffen_ss_count += 1
 This photo is Erika, my fiance. We met in Tartu. {Has_Photo: Who need Hitler's photo? Having her is enough.}
 
-+ [Back to others] -> Scene_2c_Camp_Doodle
 + {Has_Photo}[Draw a doodle on the Hitler photo] -> Scene_2c_Camp_Doodle_ea
++ [Back to others] -> Scene_2c_Camp_Doodle
 
 === Scene_2c_Camp_Doodle_ea ===
 
@@ -177,7 +180,7 @@ Do you know what will happen next if we leave? The Red Army will come to our hom
 + [Back to others] -> Scene_2c_Camp_Doodle
 
 === Scene_2_learn ===
-~ Achievement_Learn_Tannenberg = true
+
 Battle of Tannenberg Line (1944 Jul 25 - Aug 10)
 The Battle of Tannenberg Line, fought from 25 July to 10 August 1944, was a significant military engagement between the German Army Detachment Narwa and the Soviet Leningrad Front, centered on the strategically vital Narva Isthmus.
  The battle ultimately resulted in significant casualties on both sides, with estimates suggesting around 170,000 Soviet casualties and approximately 10,000 German casualties by the end of the engagement. The fighting at the Tannenberg Line exemplified the brutal nature of the Eastern Front during World War II, characterized by relentless assaults and fierce resistance.
@@ -194,7 +197,7 @@ Where did the Battle of Tannenberg happened?
 * [Saaremaa] -> Scene_2_learn_quiz
 
 === Scene_2_learn_award ===
-
+~ Achievement_Learn_Tannenberg = true
 Achievement: Learn Tannenberg battle
 
 + [Back to others] -> Scene_2c_Camp_Doodle

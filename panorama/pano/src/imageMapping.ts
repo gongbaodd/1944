@@ -24,6 +24,7 @@ export const imageMapping: { [knotName: string]: string } = {
   "Scene_2_learn": noimg,
   "Scene_2_learn_quiz": noimg,
   "Scene_2_learn_award": noimg,
+  "Scene_2c_Camp_Doodle_awards": noimg,
   "Scene_3_Truck_Refugees": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764715222/Scene_3_Truck_Refugees_mxzz0j.png",
   "Scene_3_Truck_Refugees_a": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764715222/Scene_3_Truck_Refugees_mxzz0j.png",
   "Scene_3_Truck_Refugees_b": "https://res.cloudinary.com/dmq8ipket/image/upload/v1764715222/Scene_3_Truck_Refugees_mxzz0j.png",

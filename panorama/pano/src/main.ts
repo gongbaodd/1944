@@ -47,11 +47,23 @@ function initPannellum(): void {
 
   // Create scenes object from imageMapping
   const scenes: { [key: string]: any } = {};
+  const sceneViewSettings: Record<
+    string,
+    { pitch: number; yaw: number }
+  > = {
+    Scene_2c_Camp_Doodle_e: { pitch: 5, yaw: -20 },
+    Scene_2c_Camp_Doodle_a: { pitch: 20, yaw: 50 },
+    Scene_2c_Camp_Doodle_b: { pitch: 0, yaw: 60 },
+    Scene_2c_Camp_Doodle_c: { pitch: 5, yaw: -50 },
+    Scene_2c_Camp_Doodle_d: { pitch: 5, yaw: -70 },
+  };
   Object.entries(imageMapping).forEach(([knot, url]) => {
+    const viewSettings = sceneViewSettings[knot];
     scenes[knot] = {
       type: 'equirectangular',
       panorama: url,
       autoLoad: true,
+      ...(viewSettings ? viewSettings : {}),
     };
   });
 
@@ -319,8 +331,8 @@ function createUIOverlay(): void {
   canvasOverlay.style.top = '50%';
   canvasOverlay.style.left = '50%';
   canvasOverlay.style.transform = 'translate(-50%, -50%)';
-  canvasOverlay.style.width = '80vw';
-  canvasOverlay.style.height = '80vh';
+  canvasOverlay.style.width = '25vw';
+  canvasOverlay.style.height = '52vh';
   canvasOverlay.style.border = '0';
   canvasOverlay.style.zIndex = '2000';
   canvasOverlay.style.boxShadow = '0 10px 40px rgba(0,0,0,0.6)';
@@ -350,7 +362,7 @@ const achievements: AchievementConfig[] = [
   { name: 'Karl First Fight', variable: 'Achievement_Karl_First_Fight', type: 'boolean' },
   { name: 'Karl Story', variable: 'Achievement_Karl_Story', type: 'boolean' },
   { name: 'Letter', variable: 'Achievement_Letter', type: 'boolean' },
-  { name: 'Talk with Waffen SS Soldiers', variable: 'Achievement_waffen_ss_count', type: 'number', threshold: 5 },
+  { name: 'Talk with Waffen SS Soldiers', variable: 'Achievement_waffen_ss', type: 'boolean' },
   { name: 'Red Army', variable: 'Achievement_red_army_count', type: 'number', threshold: 3 },
   { name: 'Aino Story', variable: 'Achievement_Aino_Story_count', type: 'number', threshold: 3 },
   { name: 'Juri Story', variable: 'Achievement_Juri_Story', type: 'boolean' },
