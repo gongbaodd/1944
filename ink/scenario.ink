@@ -25,8 +25,8 @@ Our story starts at the Sinimäe Hills at the Tannenberg line in the end of July
 ~ character_name = "Karl Tammik"
 As the game starts, you are Karl Tammik, a young Estonian soldier in a Waffen-SS uniform. Explosions echo. You step out with your comrades, determined to stop the enemies.
 
-+ [Get out of camp] -> Scene_1_Battle_b
-+ [Not get out of the camp] -> Scene_1_Battle_bb
++ [Attend first fight] -> Scene_1_Battle_b
++ [Not attend] -> Scene_1_Battle_bb
 
 === Scene_1_Battle_b ===
 
@@ -139,7 +139,7 @@ This photo is Erika, my fiance. We met in Tartu. {Has_Photo: Who need Hitler's p
 
 ~ speaker = "Narrator"
 
-You draw a doodle on the Hitler's photo, everyone laughs
+Use your mouse to draw a doodle on the Hitler's photo, everyone laughs
 
 + [Back to others] -> Scene_2c_Camp_Doodle
 

@@ -51,6 +51,7 @@ function initPannellum(): void {
     string,
     { pitch: number; yaw: number }
   > = {
+    0: { pitch: 0, yaw: -20 },
     Scene_2c_Camp_Doodle_e: { pitch: 5, yaw: -20 },
     Scene_2c_Camp_Doodle_a: { pitch: 20, yaw: 50 },
     Scene_2c_Camp_Doodle_b: { pitch: 0, yaw: 60 },
@@ -147,7 +148,7 @@ function updatePanorama(): void {
     const startGameHotspot = {
       id: START_GAME_HOTSPOT_ID,
       pitch: 15,
-      yaw: -100,
+      yaw: 45,
       type: 'info',
       text: '',
       cssClass: "start",
